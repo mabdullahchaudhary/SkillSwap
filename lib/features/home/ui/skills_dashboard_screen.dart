@@ -136,8 +136,9 @@ class _SkillsDashboardScreenState extends State<SkillsDashboardScreen> {
                           ),
                         ),
                         onSelected: (selected) {
-                          if (selected)
+                          if (selected) {
                             setSheetState(() => selectedLevel = lvl);
+                          }
                         },
                       );
                     }).toList(),
@@ -478,8 +479,9 @@ class _SkillsDashboardScreenState extends State<SkillsDashboardScreen> {
                   .doc(currentUser!.uid)
                   .snapshots(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting)
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
+                }
                 final data = snapshot.data?.data() as Map<String, dynamic>?;
 
                 final List<dynamic> offers = data?['offers'] ?? [];

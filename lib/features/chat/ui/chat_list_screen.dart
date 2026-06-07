@@ -80,13 +80,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   .where('status', isEqualTo: 'accepted')
                   .snapshots(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting)
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty)
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                   return _buildEmptyState(
                     'No active swaps yet. Start requesting!',
                     textMuted,
                   );
+                }
 
                 final activeChats = snapshot.data!.docs.where((doc) {
                   final data = doc.data() as Map<String, dynamic>;
@@ -110,8 +112,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   }
                 }
 
-                if (uniqueChats.isEmpty)
+                if (uniqueChats.isEmpty) {
                   return _buildEmptyState('No active swaps yet.', textMuted);
+                }
 
                 return ListView.separated(
                   padding: const EdgeInsets.only(

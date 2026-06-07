@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -112,15 +113,17 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
             child: StreamBuilder<QuerySnapshot>(
               stream: _firestore.collection('users').snapshots(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting)
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty)
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                   return Center(
                     child: Text(
                       'No users found.',
                       style: TextStyle(color: textMuted),
                     ),
                   );
+                }
 
                 final users = snapshot.data!.docs.where((doc) {
                   if (doc.id == currentUser?.uid) return false;
@@ -365,7 +368,9 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                 ),
               ),
               onPressed: () {
-                print("Request Swap with $name");
+                if (kDebugMode) {
+                  print("Request Swap with $name");
+                }
               },
               child: const Text(
                 'Request Swap',

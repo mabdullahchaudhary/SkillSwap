@@ -224,9 +224,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting)
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty)
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                   return Center(
                     child: Text(
                       'Say hi to ${widget.partnerName}! 👋',
@@ -236,6 +237,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       ),
                     ),
                   );
+                }
 
                 final messages = snapshot.data!.docs;
 
@@ -386,8 +388,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     bool isDark,
   ) {
     String timeString = '';
-    if (timestamp != null)
+    if (timestamp != null) {
       timeString = DateFormat('h:mm a').format(timestamp.toDate());
+    }
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),

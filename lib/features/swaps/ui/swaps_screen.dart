@@ -102,10 +102,12 @@ class _SwapsScreenState extends State<SwapsScreen> {
           .where('receiverId', isEqualTo: currentUser!.uid)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty)
+        }
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return _buildEmptyState('No requests received yet.', textMuted);
+        }
 
         final docs = snapshot.data!.docs.toList();
         docs.sort((a, b) {
@@ -250,13 +252,15 @@ class _SwapsScreenState extends State<SwapsScreen> {
           .where('senderId', isEqualTo: currentUser!.uid)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty)
+        }
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return _buildEmptyState(
             'You haven\'t sent any requests yet.',
             textMuted,
           );
+        }
 
         final docs = snapshot.data!.docs.toList();
         docs.sort((a, b) {

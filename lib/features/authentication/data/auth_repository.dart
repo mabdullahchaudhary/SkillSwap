@@ -161,8 +161,9 @@ class AuthRepository {
       await user.updatePassword(newPassword);
       return "Success: Password updated successfully.";
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'wrong-password')
+      if (e.code == 'wrong-password') {
         return "Error: Incorrect current password.";
+      }
       return e.message ?? "Failed to update password.";
     } catch (e) {
       return "Error: ${e.toString()}";
@@ -190,7 +191,6 @@ class AuthRepository {
     }
   }
 
-  // 8. UPLOAD PROFILE PICTURE (THE IMGBB HACK - 100% FREE)
   Future<String> uploadProfilePicture(XFile imageFile) async {
     User? user = _auth.currentUser;
     if (user == null) return "Error: No user logged in.";

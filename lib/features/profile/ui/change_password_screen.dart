@@ -170,8 +170,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 textMuted: textMuted,
                 validator: (val) {
                   if (val!.isEmpty) return 'Required';
-                  if (val != _newPasswordController.text)
+                  if (val != _newPasswordController.text) {
                     return 'Passwords do not match';
+                  }
                   return null;
                 },
               ),
