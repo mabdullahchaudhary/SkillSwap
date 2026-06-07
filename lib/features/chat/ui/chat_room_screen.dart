@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../home/ui/public_profile_screen.dart'; // Ensure correct path for Public Profile
+import 'video_call_screen.dart';
 
 // GLOBAL VARIABLES TO CONTROL NOTIFICATIONS
 String? globalCurrentActiveRoomId;
@@ -300,7 +301,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       ),
       titleSpacing: 0,
       title: GestureDetector(
-        onTap: _openPartnerProfile, // Tap to open profile
+        onTap: _openPartnerProfile,
         behavior: HitTestBehavior.opaque,
         child: Row(
           children: [
@@ -345,12 +346,39 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         ),
       ),
       actions: [
+        // 📞 AUDIO CALL BUTTON
         IconButton(
-          icon: Icon(Icons.videocam_rounded, color: accentColor, size: 24),
-          onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Video Classroom coming soon! 🚀')),
-          ),
+          icon: Icon(Icons.call_rounded, color: accentColor, size: 22),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VideoCallScreen(
+                  roomId: widget.roomId,
+                  partnerName: widget.partnerName,
+                  isVideoCall: false,
+                ),
+              ),
+            );
+          },
         ),
+        // 🎥 VIDEO CALL BUTTON
+        IconButton(
+          icon: Icon(Icons.videocam_rounded, color: accentColor, size: 26),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VideoCallScreen(
+                  roomId: widget.roomId,
+                  partnerName: widget.partnerName,
+                  isVideoCall: true,
+                ),
+              ),
+            );
+          },
+        ),
+        const SizedBox(width: 4),
       ],
     );
   }
