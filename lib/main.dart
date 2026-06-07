@@ -4,7 +4,6 @@ import 'firebase_options.dart';
 import 'core/constants/app_theme.dart';
 import 'features/authentication/ui/login_screen.dart';
 
-// Yeh ek lightweight global state hai jo puri app ko theme batayegi
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
 Future<void> main() async {
@@ -18,7 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ValueListenableBuilder theme change hotay hi bina app ko heavy kiye UI update karega
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
       builder: (_, ThemeMode currentMode, _) {
@@ -27,7 +25,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme(),
           darkTheme: AppTheme.darkTheme(),
-          themeMode: currentMode, // Yahan global theme apply ho rahi hai
+          themeMode: currentMode,
           home: const LoginScreen(),
         );
       },

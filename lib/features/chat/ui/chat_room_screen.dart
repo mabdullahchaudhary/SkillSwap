@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../home/ui/public_profile_screen.dart'; // Ensure correct path for Public Profile
+import '../../home/ui/public_profile_screen.dart';
 import 'video_call_screen.dart';
 
-// GLOBAL VARIABLES TO CONTROL NOTIFICATIONS
 String? globalCurrentActiveRoomId;
 ValueNotifier<bool> globalNotificationsEnabled = ValueNotifier(true);
 
@@ -35,13 +34,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   @override
   void initState() {
     super.initState();
-    // App ko bata do ke hum is room mein hain, taake yahan ki notification na aaye
+
     globalCurrentActiveRoomId = widget.roomId;
   }
 
   @override
   void dispose() {
-    // Jab chat se bahar jayen toh room id clear kar dein
     globalCurrentActiveRoomId = null;
     super.dispose();
   }
@@ -77,7 +75,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     }
   }
 
-  // 📂 MODERN ATTACHMENT BOTTOM SHEET
   void _showAttachmentSheet(Color surfaceColor, Color textColor, bool isDark) {
     showModalBottomSheet(
       context: context,
@@ -164,7 +161,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     );
   }
 
-  // 👤 FETCH AND OPEN PUBLIC PROFILE
   Future<void> _openPartnerProfile() async {
     showDialog(
       context: context,
@@ -178,7 +174,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           .doc(widget.partnerId)
           .get();
       if (!mounted) return;
-      Navigator.pop(context); // Close loading dialog
+      Navigator.pop(context);
 
       if (doc.exists) {
         Navigator.push(
@@ -192,7 +188,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         );
       }
     } catch (e) {
-      Navigator.pop(context); // Close loading dialog
+      Navigator.pop(context);
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Could not load profile.')));
@@ -346,7 +342,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         ),
       ),
       actions: [
-        // 📞 AUDIO CALL BUTTON
         IconButton(
           icon: Icon(Icons.call_rounded, color: accentColor, size: 22),
           onPressed: () {
@@ -362,7 +357,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             );
           },
         ),
-        // 🎥 VIDEO CALL BUTTON
+
         IconButton(
           icon: Icon(Icons.videocam_rounded, color: accentColor, size: 26),
           onPressed: () {
@@ -486,11 +481,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
               color: textMuted,
               size: 26,
             ),
-            onPressed: () => _showAttachmentSheet(
-              surfaceColor,
-              textColor,
-              isDark,
-            ), // Trigger Bottom Sheet
+            onPressed: () =>
+                _showAttachmentSheet(surfaceColor, textColor, isDark),
           ),
           Expanded(
             child: Container(

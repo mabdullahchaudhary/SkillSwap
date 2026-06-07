@@ -36,13 +36,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
-  // FIXED IMAGE PICKER LOGIC (With Format & Size Checks)
   Future<void> _pickAndUploadImage() async {
     try {
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       if (image == null) return;
 
-      // 1. FORMAT CHECK (Block AVIF, SVG, etc.)
       final String fileName = image.name.toLowerCase();
       if (!fileName.endsWith('.jpg') &&
           !fileName.endsWith('.jpeg') &&
@@ -60,7 +58,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         return;
       }
 
-      // 2. SIZE CHECK (1 MB = 1,048,576 bytes)
       final int imageBytes = await image.length();
       if (imageBytes > 1048576) {
         if (!mounted) return;
@@ -294,7 +291,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Avatar Edit Section (Wrapped completely in GestureDetector)
               Center(
                 child: GestureDetector(
                   onTap: _isUploadingImage ? null : _pickAndUploadImage,

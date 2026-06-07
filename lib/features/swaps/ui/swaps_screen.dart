@@ -90,7 +90,6 @@ class _SwapsScreenState extends State<SwapsScreen> {
     );
   }
 
-  // TAB 1: RECEIVED REQUESTS
   Widget _buildReceivedTab(
     Color surfaceColor,
     Color accentColor,
@@ -98,7 +97,6 @@ class _SwapsScreenState extends State<SwapsScreen> {
     Color textMuted,
   ) {
     return StreamBuilder<QuerySnapshot>(
-      // OrderBy hata diya hai taake Index error na aaye
       stream: _firestore
           .collection('requests')
           .where('receiverId', isEqualTo: currentUser!.uid)
@@ -109,7 +107,6 @@ class _SwapsScreenState extends State<SwapsScreen> {
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty)
           return _buildEmptyState('No requests received yet.', textMuted);
 
-        // Dart ke andar local sorting (Bulletproof)
         final docs = snapshot.data!.docs.toList();
         docs.sort((a, b) {
           final t1 =
@@ -241,7 +238,6 @@ class _SwapsScreenState extends State<SwapsScreen> {
     );
   }
 
-  // TAB 2: SENT REQUESTS
   Widget _buildSentTab(
     Color surfaceColor,
     Color accentColor,
@@ -249,7 +245,6 @@ class _SwapsScreenState extends State<SwapsScreen> {
     Color textMuted,
   ) {
     return StreamBuilder<QuerySnapshot>(
-      // OrderBy hata diya hai
       stream: _firestore
           .collection('requests')
           .where('senderId', isEqualTo: currentUser!.uid)
@@ -263,7 +258,6 @@ class _SwapsScreenState extends State<SwapsScreen> {
             textMuted,
           );
 
-        // Local sorting
         final docs = snapshot.data!.docs.toList();
         docs.sort((a, b) {
           final t1 =

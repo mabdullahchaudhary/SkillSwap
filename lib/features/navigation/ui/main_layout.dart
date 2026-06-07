@@ -7,7 +7,7 @@ import '../../home/ui/home_feed_screen.dart';
 import '../../swaps/ui/swaps_screen.dart';
 import '../../chat/ui/chat_list_screen.dart';
 import '../../profile/ui/profile_screen.dart';
-import '../../chat/ui/chat_room_screen.dart'; // Global variables ke liye import
+import '../../chat/ui/chat_room_screen.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -33,7 +33,6 @@ class _MainLayoutState extends State<MainLayout> {
     _listenForNewMessages();
   }
 
-  // 🚀 ULTRA-MODERN MINIMAL NOTIFICATION ENGINE
   void _listenForNewMessages() {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -47,7 +46,6 @@ class _MainLayoutState extends State<MainLayout> {
             if (change.type == DocumentChangeType.modified) {
               final data = change.doc.data();
               if (data != null && data['lastMessage'] != null) {
-                // Checks: Notifications ON hain aur banda kisi aur room mein toh nahi?
                 if (globalNotificationsEnabled.value &&
                     change.doc.id != globalCurrentActiveRoomId) {
                   String partnerName = data['senderId'] == user.uid
@@ -55,7 +53,6 @@ class _MainLayoutState extends State<MainLayout> {
                       : data['senderName'];
 
                   if (mounted) {
-                    // Theme colors extract kar rahe hain notification design ke liye
                     final bool isDark =
                         Theme.of(context).brightness == Brightness.dark;
                     final Color surfaceColor = isDark
@@ -71,15 +68,13 @@ class _MainLayoutState extends State<MainLayout> {
                         ? const Color(0xFF00E5FF)
                         : const Color(0xFF007BFF);
 
-                    ScaffoldMessenger.of(
-                      context,
-                    ).hideCurrentSnackBar(); // Purani fauran hatao
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         elevation: 15,
                         behavior: SnackBarBehavior.floating,
                         backgroundColor: surfaceColor,
-                        // Yeh margin notification ko screen ke TOP par bhej dega!
+
                         margin: EdgeInsets.only(
                           bottom: MediaQuery.of(context).size.height - 160,
                           left: 20,
@@ -95,7 +90,6 @@ class _MainLayoutState extends State<MainLayout> {
                         duration: const Duration(seconds: 3),
                         content: Row(
                           children: [
-                            // Minimal Icon Container
                             Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
@@ -109,7 +103,7 @@ class _MainLayoutState extends State<MainLayout> {
                               ),
                             ),
                             const SizedBox(width: 16),
-                            // Text Area
+
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

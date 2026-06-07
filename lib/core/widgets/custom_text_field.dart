@@ -5,9 +5,9 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final IconData prefixIcon;
   final bool obscureText;
-  final Widget? suffixIcon; // Naya: Eye icon ke liye
+  final Widget? suffixIcon;
   final TextInputType keyboardType;
-  final String? Function(String?)? validator; // Naya: Validation logic ke liye
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
-      validator: validator, // Validation yahan apply hogi
+      validator: validator,
       style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
       decoration: InputDecoration(
         hintText: hintText,

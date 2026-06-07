@@ -19,7 +19,6 @@ class _DangerZoneScreenState extends State<DangerZoneScreen> {
   bool _isLoading = false;
   bool _obscurePassword = true;
 
-  // Anti-Bot Math Quiz Variables
   late int _num1;
   late int _num2;
   late int _correctAnswer;
@@ -39,15 +38,14 @@ class _DangerZoneScreenState extends State<DangerZoneScreen> {
 
   void _generateQuiz() {
     final random = Random();
-    _num1 = random.nextInt(10) + 1; // 1 to 10
-    _num2 = random.nextInt(10) + 1; // 1 to 10
+    _num1 = random.nextInt(10) + 1;
+    _num2 = random.nextInt(10) + 1;
     _correctAnswer = _num1 + _num2;
   }
 
   Future<void> _handleDeleteAccount() async {
     if (!_formKey.currentState!.validate()) return;
 
-    // Verify Anti-Bot Quiz manually before hitting backend
     if (_quizController.text.trim() != _correctAnswer.toString()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -56,7 +54,7 @@ class _DangerZoneScreenState extends State<DangerZoneScreen> {
         ),
       );
       setState(() {
-        _generateQuiz(); // Regenerate quiz on failure
+        _generateQuiz();
         _quizController.clear();
       });
       return;
@@ -78,7 +76,7 @@ class _DangerZoneScreenState extends State<DangerZoneScreen> {
           backgroundColor: Colors.orange,
         ),
       );
-      // Navigate straight to Login & clear history
+
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -135,7 +133,6 @@ class _DangerZoneScreenState extends State<DangerZoneScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Warning Banner
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -178,7 +175,6 @@ class _DangerZoneScreenState extends State<DangerZoneScreen> {
               ),
               const SizedBox(height: 40),
 
-              // Step 1: Password
               Text(
                 'Step 1: Verify Identity',
                 style: TextStyle(
@@ -201,7 +197,6 @@ class _DangerZoneScreenState extends State<DangerZoneScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Step 2: Anti-Bot Quiz
               Text(
                 'Step 2: Anti-Bot Verification',
                 style: TextStyle(
@@ -225,7 +220,6 @@ class _DangerZoneScreenState extends State<DangerZoneScreen> {
               ),
               const SizedBox(height: 40),
 
-              // Final Delete Button
               GestureDetector(
                 onTap: _isLoading ? null : _handleDeleteAccount,
                 child: Container(

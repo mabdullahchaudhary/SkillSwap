@@ -212,7 +212,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   textMuted: textMuted,
                   accentColor: Colors.redAccent,
                   onTap: () {
-                    // Navigate to Danger Zone
                     Navigator.push(
                       context,
                       MaterialPageRoute(

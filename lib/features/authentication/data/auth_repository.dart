@@ -152,7 +152,6 @@ class AuthRepository {
   }) async {
     User? user = _auth.currentUser;
     if (user == null) return "Error: No user logged in.";
-
     try {
       AuthCredential credential = EmailAuthProvider.credential(
         email: user.email!,

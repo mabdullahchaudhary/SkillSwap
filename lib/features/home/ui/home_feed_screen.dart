@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'skills_dashboard_screen.dart';
-import 'public_profile_screen.dart'; // Nayi screen import kar li
+import 'public_profile_screen.dart';
 
 class HomeFeedScreen extends StatefulWidget {
   const HomeFeedScreen({super.key});
@@ -19,10 +19,9 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
   @override
   void initState() {
     super.initState();
-    _syncUserDataToFirestore(); // App open hotay hi data sync karega
+    _syncUserDataToFirestore();
   }
 
-  // YEH FUNCTION "UNKNOWN USER" WALA MASLA HAL KAREGA
   Future<void> _syncUserDataToFirestore() async {
     if (currentUser == null) return;
     final docRef = _firestore.collection('users').doc(currentUser!.uid);
@@ -30,7 +29,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
       'name': currentUser!.displayName ?? 'Skill Swapper',
       'photoUrl': currentUser!.photoURL ?? '',
       'email': currentUser!.email ?? '',
-    }, SetOptions(merge: true)); // Merge true ensures skills delete nahi hongi
+    }, SetOptions(merge: true));
   }
 
   @override
@@ -214,7 +213,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
         children: [
           GestureDetector(
             onTap: () {
-              // Yahan se Public Profile open hogi
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -367,7 +365,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                 ),
               ),
               onPressed: () {
-                // Request Swap Bottom Sheet will go here later
                 print("Request Swap with $name");
               },
               child: const Text(

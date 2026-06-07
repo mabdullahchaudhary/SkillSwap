@@ -46,7 +46,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result), backgroundColor: Colors.green),
       );
-      Navigator.pop(context); // Go back to settings
+      Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result), backgroundColor: Colors.redAccent),
@@ -162,7 +162,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               _buildPasswordField(
                 controller: _confirmPasswordController,
                 hint: 'Confirm new password',
-                isObscure: _obscureNew, // Sync with new password toggle
+                isObscure: _obscureNew,
                 onToggle: () => setState(() => _obscureNew = !_obscureNew),
                 surfaceColor: surfaceColor,
                 accentColor: accentColor,

@@ -43,7 +43,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
           ),
         ),
         actions: [
-          // 🔔 NOTIFICATION TOGGLE BUTTON
           ValueListenableBuilder<bool>(
             valueListenable: globalNotificationsEnabled,
             builder: (context, isEnabled, child) {

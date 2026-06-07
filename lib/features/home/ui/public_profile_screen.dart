@@ -20,7 +20,6 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
   final User? currentUser = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // PREMIUM BOTTOM SHEET FOR SENDING REQUEST
   void _showRequestSheet(BuildContext context, String receiverName) {
     final TextEditingController messageController = TextEditingController();
     bool isSending = false;
@@ -126,7 +125,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                   messageController.text.trim(),
                                 );
                                 if (!context.mounted) return;
-                                Navigator.pop(context); // Close sheet
+                                Navigator.pop(context);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
@@ -165,16 +164,11 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
     );
   }
 
-  // FIREBASE LOGIC TO SAVE THE REQUEST
-  // FIREBASE LOGIC: UNIQUE CHAT ROOM CREATION / UPDATION
   Future<void> _sendSwapRequest(String message) async {
     if (currentUser == null) return;
 
-    // Check if user is trying to send request to themselves (Security)
     if (currentUser!.uid == widget.userId) return;
 
-    // Unique Room ID banane ka tarika: Dono UIDs ko alphabetically mila do
-    // Is tarah chahe A request bheje ya B, ID hamesha same banegi!
     String roomId = currentUser!.uid.compareTo(widget.userId) < 0
         ? '${currentUser!.uid}_${widget.userId}'
         : '${widget.userId}_${currentUser!.uid}';
@@ -183,20 +177,18 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
     final docSnap = await docRef.get();
 
     if (docSnap.exists) {
-      // Agar pehle se baat cheet/request chal rahi hai toh sirf message update karo
       await docRef.update({
         'message': message,
         'timestamp': FieldValue.serverTimestamp(),
       });
     } else {
-      // Agar pehli dafa request bhej raha hai, toh naya data create karo
       await docRef.set({
         'senderId': currentUser!.uid,
         'receiverId': widget.userId,
         'senderName': currentUser!.displayName ?? 'Skill Swapper',
         'receiverName': widget.userData['name'] ?? 'Unknown User',
         'message': message,
-        'status': 'pending', // pending, accepted, rejected
+        'status': 'pending',
         'timestamp': FieldValue.serverTimestamp(),
       });
     }
